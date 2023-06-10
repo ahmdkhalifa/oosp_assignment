@@ -1,0 +1,110 @@
+import java.util.ArrayList;
+
+public class MovieTheater {
+    private String name;
+    private ArrayList<String> movieList;
+    private ArrayList<String> ticketOrders;
+
+    public MovieTheater(String name, ArrayList<String> movieList) {
+        this.name = name;
+        this.movieList = movieList;
+        this.ticketOrders = new ArrayList<String>();
+    }
+
+    private static ArrayList<String> createMovieList() {
+        ArrayList<String> movieList = new ArrayList<String>();
+        movieList.add("The Avengers, 10.50, action");
+        movieList.add("Jurassic Park, 9.00, sci-fi");
+        movieList.add("The Godfather, 11.50, drama");
+        movieList.add("Star Wars, 8.50, sci-fi");
+        movieList.add("Forrest Gump, 10.00, drama");
+        movieList.add("The Lion King, 7.50, animation");
+        movieList.add("The Matrix, 9.50, sci-fi");
+        movieList.add("Titanic, 12.00, romance");
+        movieList.add("The Shawshank Redemption, 11.00, drama");
+        return movieList;
+    }
+
+    public void addTicketOrder(String ticketOrder) {
+        this.ticketOrders.add(ticketOrder);
+        System.out.println("Added ticket order: " + ticketOrder);
+    }
+
+    public void fulfillTicketOrder() {
+        if (this.ticketOrders.size() > 0) {
+            String ticketOrder = this.ticketOrders.get(0);
+            this.ticketOrders.remove(0);
+            System.out.println("Fulfilled ticket order: " + ticketOrder);
+        } else {
+            System.out.println("No ticket orders to fulfill.");
+        }
+    }
+
+    public void listTicketOrders() {
+        if (this.ticketOrders.size() > 0) {
+            System.out.println("Current ticket orders:");
+            for (String ticketOrder : this.ticketOrders) {
+                System.out.println(ticketOrder);
+            }
+        } else {
+            System.out.println("No ticket orders.");
+        }
+    }
+
+    public double dueAmount() {
+        double total = 0;
+        for (String ticketOrder : this.ticketOrders) {
+            String[] items = ticketOrder.split(",");
+            double price = Double.parseDouble(items[1].trim());
+            total += price;
+        }
+        return total;
+    }
+
+    public String cheapestMovie() {
+        String cheapestMovie = "";
+        double cheapestPrice = Double.MAX_VALUE;
+        for (String movie : this.movieList) {
+            String[] parts = movie.split(",");
+            double price = Double.parseDouble(parts[1].trim());
+            if (price < cheapestPrice) {
+                cheapestMovie = parts[0].trim();
+                cheapestPrice = price;
+            }
+        }
+        return cheapestMovie;
+    }
+
+    public void actionMoviesOnly() {
+        System.out.println("Action movies:");
+        for (String movie : this.movieList) {
+            String[] parts = movie.split(",");
+            String genre = parts[2].trim();
+            if (genre.equals("action")) {
+                System.out.println(parts[0].trim());
+            }
+        }
+    }
+
+    public void dramaMoviesOnly() {
+        System.out.println("Drama movies:");
+        for (String movie : this.movieList) {
+            String[] parts = movie.split(",");
+            String genre = parts[2].trim();
+            if (genre.equals("drama")) {
+                System.out.println(parts[0].trim());
+            }
+        }
+    }
+
+    public void sciFiMoviesOnly() {
+        System.out.println("Sci-fi movies:");
+        for (String movie : this.movieList) {
+            String[] parts = movie.split(",");
+            String genre = parts[2].trim();
+            if (genre.equals("sci-fi")) {
+                System.out.println(parts[0].trim());
+            }
+        }
+    }
+}
